@@ -23,9 +23,10 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
 import TodoItem from "./components/TodoItem.vue";
 import { useToast } from "vue-toastification";
+import { Task } from "./types/Task";
 
 export default {
   setup() {
@@ -40,7 +41,7 @@ export default {
 
   data() {
     return {
-      tasks: [],
+      tasks: [] as Task[],
     };
   },
 
@@ -63,8 +64,8 @@ export default {
   },
 
   methods: {
-    addTask(task) {
-      const newTask = {
+    addTask(task: string) {
+      const newTask: Task = {
         id: new Date().toLocaleString(),
         name: task,
         isCompleted: false,
@@ -78,14 +79,14 @@ export default {
       if (this.tasks.find((t) => t.name === newTask.name.trim())) {
         this.toast.error("Task: " + newTask.name + " already exists!");
         return;
-      }
+      } 
 
       this.tasks.unshift(newTask);
       this.toast.success("Task added successfully!");
       localStorage.setItem("tasks", JSON.stringify(this.tasks));
     },
 
-    changeCompletionStatus(id, isCompleted) {
+    changeCompletionStatus(id:string, isCompleted: boolean) {
       const task = this.tasks.find((t) => t.id === id);
       if (task) {
         task.isCompleted = !isCompleted;
@@ -94,7 +95,7 @@ export default {
       }
     },
 
-    editTask(id, updatedTask){
+    editTask(id: string, updatedTask: string) {
       if (updatedTask.trim() === "") {
         this.toast.error("Task cannot be empty!");
         return;
@@ -117,7 +118,7 @@ export default {
       this.toast.success("Task: " + taskToEdit.name + " was successfully updated!");
     },
 
-    deleteTask(id) {
+    deleteTask(id: string) {
       const taskToDeleteIndex = this.tasks.findIndex((t) => t.id === id);
       const taskToDelete = this.tasks[taskToDeleteIndex];
 

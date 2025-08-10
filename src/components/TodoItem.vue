@@ -7,9 +7,9 @@
     <button @click="changeStatus">Change Status</button>
     <button class="deleteBtn" @click="deleteTask">Delete Task</button>
     <div>
-    <button @click="toggleEdit">{{ canEdit ? 'Hide' : 'Edit' }}</button>
+    <button v-if="!canEdit && !isCompleted" @click="toggleEdit">{{ canEdit ? 'Hide' : 'Edit' }}</button>
     </div>
-    <div v-if="canEdit">
+    <div v-if="canEdit && !isCompleted">
       <label><strong>Task</strong></label>
       <input type="text" v-model="updatedTask">
       <button @click="editTask">Save</button>
@@ -19,7 +19,6 @@
 
 <script>
 export default {
-  emits: ["change-status", "delete-task", "edit-task"],
 
   props: {
     id: {
@@ -36,6 +35,8 @@ export default {
       default: false,
     },
   },
+
+  emits: ["change-status", "delete-task", "edit-task"],
 
   data(){
     return{

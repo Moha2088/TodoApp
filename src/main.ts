@@ -7,7 +7,9 @@ import "vue-toastification/dist/index.css";
 
 const app = createApp(App);
 
+// eslint-disable-next-line vue/component-definition-name-casing
 app.component("todo-item", TodoItem);
+//eslint-disable-next-line vue/component-definition-name-casing
 app.component("add-form", AddForm);
 
 const options: PluginOptions = {

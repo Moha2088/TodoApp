@@ -1,23 +1,24 @@
 <template>
   <section>
     <h1>Tasks: {{ activeTaskCount }}</h1>
-    <add-form @taskAdded="addTask"></add-form>
+    <add-form @task-added="addTask"/>
     <ul v-if="tasks.length > 0">
       <todo-item
         v-for="task in tasks"
-        :key="task.id"
         :id="task.id"
+        :key="task.id"
         :name="task.name"
         :is-completed="task.isCompleted"
         @change-status="changeCompletionStatus"
         @clear-tasks="clearTasks"
         @delete-task="deleteTask"
         @edit-task="editTask"
-      >
-      </todo-item>
+      />
     </ul>
     <p class="listEmptyMessage" v-else>No tasks added yet.</p>
-    <button v-if="tasks.length > 0" class="clearBtn" @click="clearTasks">
+    <button v-if="tasks.length > 0" 
+      class="clearBtn"
+      @click="clearTasks">
       Clear Tasks
     </button>
   </section>
@@ -27,13 +28,11 @@
 import TodoItem from "./components/TodoItem.vue";
 import { useToast } from "vue-toastification";
 import { Task } from "./types/Task";
+import { defineComponent } from "vue";
 
-export default {
-  setup() {
-    const toast = useToast();
-    return { toast };
-  },
+const toast = useToast();
 
+export default defineComponent({
   name: "App",
   components: {
     TodoItem,
@@ -46,7 +45,7 @@ export default {
   },
 
   computed: {
-    activeTaskCount() {
+    activeTaskCount() : number {
       return this.tasks.length - this.tasks.filter(t => t.isCompleted).length;
     }
   },
@@ -58,13 +57,13 @@ export default {
       this.tasks = JSON.parse(storedTasks);
       
       setTimeout(() =>{
-        this.toast.info("Loaded saved tasks!");
+        toast.info("Loaded saved tasks!");
       }, 100);
     }
   },
 
   methods: {
-    addTask(task: string) {
+    addTask(task: string) {      
       const newTask: Task = {
         id: new Date().toLocaleString(),
         name: task,
@@ -72,50 +71,51 @@ export default {
       };
 
       if (task.trim() === "") {
-        this.toast.error("Task cannot be empty!");
+        toast.error("Task cannot be empty!");
         return;
       }
 
       if (this.tasks.find((t) => t.name === newTask.name.trim())) {
-        this.toast.error("Task: " + newTask.name + " already exists!");
+        toast.error("Task: " + newTask.name + " already exists!");
         return;
-      } 
+      }
 
       this.tasks.unshift(newTask);
-      this.toast.success("Task added successfully!");
+      toast.success("Task added successfully!");
       localStorage.setItem("tasks", JSON.stringify(this.tasks));
     },
 
     changeCompletionStatus(id:string, isCompleted: boolean) {
       const task = this.tasks.find((t) => t.id === id);
+      
       if (task) {
         task.isCompleted = !isCompleted;
         localStorage.setItem("tasks", JSON.stringify(this.tasks));
-        this.toast.success("Task status changed!");
+        toast.success("Task status changed!");
       }
     },
 
     editTask(id: string, updatedTask: string) {
       if (updatedTask.trim() === "") {
-        this.toast.error("Task cannot be empty!");
+        toast.error("Task cannot be empty!");
         return;
       }
 
       const taskToEdit = this.tasks.find((t) => t.id === id);
 
       if(this.tasks.find((t) => t.name === updatedTask.trim())){
-        this.toast.error("Task: " + updatedTask + " already exists!");
+        toast.error("Task: " + updatedTask + " already exists!");
         return;
       }
 
       if (!taskToEdit){
-        this.toast.error("Error finding task");
+        toast.error("Error finding task");
         return;
       }
 
       taskToEdit.name = updatedTask;
       localStorage.setItem("tasks", JSON.stringify(this.tasks));
-      this.toast.success("Task: " + taskToEdit.name + " was successfully updated!");
+      toast.success("Task: " + taskToEdit.name + " was successfully updated!");
     },
 
     deleteTask(id: string) {
@@ -131,21 +131,21 @@ export default {
         }
 
         localStorage.setItem("tasks", JSON.stringify(this.tasks));
-        this.toast.success(
+        toast.success(
           "Task: " + taskToDelete.name + " was deleted successfully!"
         );
       } else {
-        this.toast.error("Error deleting task");
+        toast.error("Error deleting task");
       }
     },
 
     clearTasks() {
       this.tasks = [];
       localStorage.removeItem("tasks");
-      this.toast.success("Tasks cleared!");
+      toast.success("Tasks cleared!");
     },
   },
-};
+});
 </script>
 
 <style>

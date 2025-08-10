@@ -16,7 +16,7 @@
       />
     </ul>
     <p class="listEmptyMessage" v-else>No tasks added yet.</p>
-    <button v-if="tasks.length > 0" 
+    <button v-if="tasks.length > 0"
       class="clearBtn"
       @click="clearTasks">
       Clear Tasks
@@ -55,15 +55,22 @@ export default defineComponent({
 
     if (storedTasks) {
       this.tasks = JSON.parse(storedTasks);
-      
+
       setTimeout(() =>{
-        toast.info("Loaded saved tasks!");
+        switch (this.tasks.length) {
+          case 1:
+            toast.info("Loaded 1 saved task!");
+            break;
+
+          default:
+            toast.info("Loaded " + this.tasks.length + " saved tasks!");
+        }
       }, 100);
     }
   },
 
   methods: {
-    addTask(task: string) {      
+    addTask(task: string) {
       const newTask: Task = {
         id: new Date().toLocaleString(),
         name: task,
@@ -87,7 +94,7 @@ export default defineComponent({
 
     changeCompletionStatus(id:string, isCompleted: boolean) {
       const task = this.tasks.find((t) => t.id === id);
-      
+
       if (task) {
         task.isCompleted = !isCompleted;
         localStorage.setItem("tasks", JSON.stringify(this.tasks));

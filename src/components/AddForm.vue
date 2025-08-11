@@ -1,5 +1,7 @@
 <template>
   <form @submit.prevent="addTask">
+      <h2>Create Task</h2>
+
     <div>
       <label><strong>Task</strong></label>
       <input type="text" v-model="enteredTask" />
@@ -31,6 +33,8 @@ export default {
 
 <style>
 
-
+h2{
+  margin-bottom: 20px;
+}
 
 </style>

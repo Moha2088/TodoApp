@@ -217,24 +217,31 @@ animation-duration: 1s;
   max-width: 150px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 50px;
   background-color:  #8400ff;
   padding: 12px;
   border-radius: 20px;
 }
 
-#app li, form {
+#app li {
   margin-right: auto;
   margin-left: auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 10px;
   padding: 17px;
-  max-width: 400px;
+  max-width: 600px;
   list-style:none;
 }
 
 #app form {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 50px;
+  max-width: 400px;
+  padding: 50px;
 }
 
 .listEmptyMessage {
@@ -271,4 +278,35 @@ animation-duration: 1s;
 #app .deleteBtn:hover {
   background-color: #c83f3f;
 }
+
+#app .editBtn {
+  padding: 10px;
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: white;
+  background-color: #ff7300;
+  border-radius: 10px;
+}
+
+#app .editBtn:hover {
+  background-color: #d16a00;
+}
+
+#app .saveBtn{
+  padding: 10px;
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: white;
+  background-color: #0cf045;
+  border-radius: 10px;
+}
+
+#app .saveBtn:hover {
+  background-color: #0bc63a;
+}
+
 </style>

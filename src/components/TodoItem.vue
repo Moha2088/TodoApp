@@ -7,12 +7,12 @@
     <button @click="changeStatus">Change Status</button>
     <button class="deleteBtn" @click="deleteTask">Delete Task</button>
     <div>
-    <button v-if="!isCompleted" @click="toggleEdit">{{ canEdit ? 'Hide' : 'Edit' }}</button>
+    <button v-if="!isCompleted" class="editBtn" @click="toggleEdit">{{ canEdit ? 'Hide' : 'Edit' }}</button>
     </div>
     <div v-if="canEdit && !isCompleted">
       <label><strong>Task</strong></label>
       <input type="text" v-model="updatedTask">
-      <button @click="editTask">Save</button>
+      <button class="saveBtn" @click="editTask">Save</button>
       </div>
   </li>
 </template>

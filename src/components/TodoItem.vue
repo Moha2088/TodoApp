@@ -1,6 +1,7 @@
 <template>
   <li :class="[isCompleted ? 'hidden' : 'visible']">
     <h3>{{ name }}</h3>
+    <p>Created: {{ creationDate ? creationDate : "N/A" }}</p>
     <p :class="[isCompleted ? 'completed' : 'notCompleted']">
       {{ isCompleted ? "completed" : "Not completed" }}
     </p>
@@ -34,6 +35,11 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    creationDate: {
+      type: String,
+      required: true
+    }
   },
 
   emits: ["change-status", "delete-task", "edit-task"],
@@ -41,7 +47,7 @@ export default {
   data(){
     return{
       canEdit: false,
-      updatedTask: ''
+      updatedTask: this.name
     }
   },
 

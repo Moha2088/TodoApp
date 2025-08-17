@@ -9,6 +9,7 @@
         :key="task.id"
         :name="task.name"
         :is-completed="task.isCompleted"
+        :creation-date="task.creationDate"
         @change-status="changeCompletionStatus"
         @clear-tasks="clearTasks"
         @delete-task="deleteTask"
@@ -75,6 +76,7 @@ export default defineComponent({
         id: new Date().toLocaleString(),
         name: task,
         isCompleted: false,
+        creationDate: new Date().toLocaleString()
       };
 
       if (task.trim() === "") {
